@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    private static GameManager _instance;
+    private ResourceManager _resource = new ResourceManager();
 
-    public static GameManager Instance { get { Init(); return instance; } }
+    public static GameManager Instance { get { Init(); return _instance; } }
+    public static ResourceManager Resource { get { return Instance._resource; } }
 
     void Start()
     {
         Init();
+
+        Resource.Instantiate("Box");
     }
 
     void Update()
@@ -20,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     public static void Init()
     {
-        if (instance == null)
+        if (_instance == null)
         {
             GameObject go = GameObject.Find("#GameManager");
             if (go == null)
@@ -29,7 +33,7 @@ public class GameManager : MonoBehaviour
                 go.AddComponent<GameManager>();
             }
 
-            instance = go.GetComponent<GameManager>();
+            _instance = go.GetComponent<GameManager>();
             DontDestroyOnLoad(go);
         }
     }
