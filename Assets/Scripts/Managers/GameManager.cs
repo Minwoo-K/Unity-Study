@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Init();
-
-        Resource.Instantiate("Box");
     }
 
     void Update()
