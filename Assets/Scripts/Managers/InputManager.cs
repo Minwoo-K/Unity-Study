@@ -5,13 +5,22 @@ using UnityEngine;
 
 public class InputManager
 {
-    public Action inputController = null;
+    public Action keyController = null;
+    public Action mouseController = null;
 
     public void UpdateInput()
     {
-        if (inputController != null)
+        if (keyController != null)
         {
-            inputController.Invoke();
+            keyController.Invoke();
+        }
+
+        if (mouseController != null)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                mouseController.Invoke();
+            }
         }
     }
 }

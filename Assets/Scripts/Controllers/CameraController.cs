@@ -9,6 +9,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Vector3 Delta;
 
+    private RaycastHit hit;
+    private int obstacleLayer = 1 << 7 | 1 << 8;
+
     void Start()
     {
         targetObject = GameObject.FindGameObjectWithTag("Player");
@@ -16,6 +19,21 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        transform.position = targetObject.transform.position + Delta;
+        if (Physics.Raycast(targetObject.transform.position, Delta, out hit, 10f, obstacleLayer))
+        {
+            //Debug.Log($"Raycast Hit on {hit.transform.name}");
+            if ((hit.point - targetObject.transform.position).magnitude <= 2f)
+            {
+                transform.position = hit.point + Vector3.up;
+            }
+            else
+            {
+                transform.position = hit.point;
+            }
+        }
+        else
+        {
+            transform.position = targetObject.transform.position + Delta;
+        }
     }
 }

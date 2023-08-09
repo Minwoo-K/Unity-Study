@@ -7,15 +7,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float moveSpeed;
 
+    private Vector3 destination;
+
     void Start()
     {
-        GameManager.Input.inputController -= KeyBoardController;
-        GameManager.Input.inputController += KeyBoardController;
+        GameManager.Input.mouseController -= MouseController;
+        GameManager.Input.mouseController += MouseController;
+
+        //GameManager.Input.keyController -= KeyBoardController;
+        //GameManager.Input.keyController += KeyBoardController;
     }
 
     void Update()
     {
-        
+
+    }
+
+    private void MouseController()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Ground"));
+
+        Debug.Log(destination);
+
+        transform.position = Vector3.Lerp(transform.position, destination, 0.4f);
     }
 
     private void KeyBoardController()
