@@ -9,10 +9,16 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        GameManager.Input.inputController -= KeyBoardController;
+        GameManager.Input.inputController += KeyBoardController;
+    }
+
+    void Update()
+    {
         
     }
 
-    void FixedUpdate()
+    private void KeyBoardController()
     {
         if (Input.GetKey(KeyCode.W))
         {
