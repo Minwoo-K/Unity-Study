@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638270406378256646
-    m_Hash: 3086559985
+      ticks: 638271279905285674
+    m_Hash: 256059767
   m_LockFileStatus:
     m_FilePath: C:/Users/user/Desktop/Min/study/Unity/Unity-Study/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638270406459415024
-    m_Hash: 1889107499
+      ticks: 638271279905285674
+    m_Hash: 1054297730
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -2802,6 +2802,8 @@ m_PackageAssets:
         - 1.0.6
         - 2.0.2
         - 2.0.3
+        - 2.0.4
+        - 2.0.5
         compatible:
         - 0.1.5-preview
         - 0.1.6-preview
@@ -2811,6 +2813,8 @@ m_PackageAssets:
         - 1.0.6
         - 2.0.2
         - 2.0.3
+        - 2.0.4
+        - 2.0.5
         verified: 1.0.6
       dependencies: []
       resolvedDependencies: []
