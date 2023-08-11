@@ -74,14 +74,21 @@ public class PlayerController : MonoBehaviour
         // Do Nothing
     }
 
-    private void MouseController()
+    private void MouseController(Define.MouseMode mouseMode)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Get the Ray Point of the Mouse Position
-        RaycastHit hitInfo; // To Store the Clicked Point
-        if (Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Ground"))) // Raycast from the Screen's Point to the Ground, Storing the Hit Point
+        if (mouseMode == Define.MouseMode.Click)
         {
-            destination = hitInfo.point; // Set the Destination to the Hit Point
-            playerMode = PlayerMode.Moving;
+            return;
+        }
+        else // (mouseMode == Define.MouseMode.Press)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Get the Ray Point of the Mouse Position
+            RaycastHit hitInfo; // To Store the Clicked Point
+            if (Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Ground"))) // Raycast from the Screen's Point to the Ground, Storing the Hit Point
+            {
+                destination = hitInfo.point; // Set the Destination to the Hit Point
+                playerMode = PlayerMode.Moving;
+            }
         }
     }
 
