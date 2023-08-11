@@ -53,7 +53,15 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMoving()
     {
+        Vector3 dir = destination - transform.position; // Direction Vector from the Current Position to the Destination
+        if (dir.magnitude <= 0.01f) // If Distance Left is less than 0.01,
+        {
+            playerMode = PlayerMode.Idle; // Stop Moving and Change the Mode to IDLE
+            return;
+        }
 
+        transform.position += dir.normalized * moveSpeed * Time.deltaTime; // Each Frame, Move to the Direction by (moveSpeed X deltaTime)
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), moveSpeed * Time.deltaTime * 0.5f); // Slowly Rotate towards the Direction
     }
 
     private void UpdateAttacking()
@@ -73,6 +81,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Ground"))) // Raycast from the Screen's Point to the Ground, Storing the Hit Point
         {
             destination = hitInfo.point; // Set the Destination to the Hit Point
+            playerMode = PlayerMode.Moving;
         }
     }
 
