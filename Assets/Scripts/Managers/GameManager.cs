@@ -6,9 +6,11 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
     private ResourceManager _resource = new ResourceManager();
+    private InputManager _input = new InputManager();
 
     public static GameManager Instance { get { Init(); return _instance; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
+    public static InputManager Input { get { return Instance._input; } }
 
     void Start()
     {
