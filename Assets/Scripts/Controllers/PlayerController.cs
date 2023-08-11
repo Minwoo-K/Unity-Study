@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed;
+    private enum PlayerMode
+    {
+        Idle,
+        Moving,
+        Attacking,
+        Dead
+    }
 
-    private Vector3 destination;
+    [SerializeField]
+    private float moveSpeed; // Any Movement Speed
+
+    private PlayerMode playerMode = PlayerMode.Idle; // To Distinguish Behaviours based on the Mode
+    private Vector3 destination; // Destination Position when Moving
 
     void Start()
     {
-        GameManager.Input.mouseController -= MouseController;
-        GameManager.Input.mouseController += MouseController;
+        GameManager.Input.mouseController -= MouseController; // To Avoid Duplicate Action
+        GameManager.Input.mouseController += MouseController; // Register onto the Input Manager's Action
 
         //GameManager.Input.keyController -= KeyBoardController;
         //GameManager.Input.keyController += KeyBoardController;
@@ -20,18 +29,51 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        switch (playerMode)
+        {
+            case PlayerMode.Idle:
+                UpdateIdle();
+                break;
+            case PlayerMode.Moving:
+                UpdateMoving();
+                break;
+            case PlayerMode.Attacking:
+                UpdateAttacking();
+                break;
+            case PlayerMode.Dead:
+                UpdateDead();
+                break;
+        }
+    }
 
+    private void UpdateIdle()
+    {
+
+    }
+
+    private void UpdateMoving()
+    {
+
+    }
+
+    private void UpdateAttacking()
+    {
+
+    }
+
+    private void UpdateDead()
+    {
+        // Do Nothing
     }
 
     private void MouseController()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hitInfo;
-        Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Ground"));
-
-        Debug.Log(destination);
-
-        transform.position = Vector3.Lerp(transform.position, destination, 0.4f);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Get the Ray Point of the Mouse Position
+        RaycastHit hitInfo; // To Store the Clicked Point
+        if (Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Ground"))) // Raycast from the Screen's Point to the Ground, Storing the Hit Point
+        {
+            destination = hitInfo.point; // Set the Destination to the Hit Point
+        }
     }
 
     private void KeyBoardController()
