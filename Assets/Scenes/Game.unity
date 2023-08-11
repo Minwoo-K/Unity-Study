@@ -853,6 +853,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2853091148876824865, guid: 3ce79e8ef1cabe84fb7153980147ff9e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6064b03d490e51244862dcaa9cf5d8e4, type: 2}
     - target: {fileID: 3570585784653327641, guid: 3ce79e8ef1cabe84fb7153980147ff9e, type: 3}
       propertyPath: m_Constraints
       value: 112

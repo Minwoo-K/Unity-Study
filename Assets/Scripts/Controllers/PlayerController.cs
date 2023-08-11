@@ -17,12 +17,13 @@ public class PlayerController : MonoBehaviour
 
     private PlayerMode playerMode = PlayerMode.Idle; // To Distinguish Behaviours based on the Mode
     private Vector3 destination; // Destination Position when Moving
+    private Animator animator;
 
     void Start()
     {
         GameManager.Input.mouseController -= MouseController; // To Avoid Duplicate Action
         GameManager.Input.mouseController += MouseController; // Register onto the Input Manager's Action
-
+        animator = GetComponent<Animator>(); // Get the Animator Component at the start
         //GameManager.Input.keyController -= KeyBoardController;
         //GameManager.Input.keyController += KeyBoardController;
     }
@@ -48,7 +49,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateIdle()
     {
-
+        animator.SetFloat("Wait_Run_Ratio", 0);
     }
 
     private void UpdateMoving()
@@ -60,8 +61,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        transform.position += dir.normalized * moveSpeed * Time.deltaTime; // Each Frame, Move to the Direction by (moveSpeed X deltaTime)
+        float dist = Mathf.Clamp(moveSpeed * Time.deltaTime, 0, dir.magnitude);
+        transform.position += dir.normalized * dist; // Each Frame, Move to the Direction by (moveSpeed X deltaTime)
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), moveSpeed * Time.deltaTime * 0.5f); // Slowly Rotate towards the Direction
+
+        animator.SetFloat("Wait_Run_Ratio", 1);
     }
 
     private void UpdateAttacking()
