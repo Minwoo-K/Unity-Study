@@ -6,7 +6,9 @@ using UnityEngine;
 public class InputManager
 {
     public Action keyController = null;
-    public Action mouseController = null;
+    public Action<Define.MouseMode> mouseController = null;
+
+    private bool pressed = false; // To Detect Press Event
 
     public void UpdateInput()
     {
@@ -17,10 +19,24 @@ public class InputManager
 
         if (mouseController != null)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
-                mouseController.Invoke();
+                if (pressed)
+                {
+                    mouseController.Invoke(Define.MouseMode.Press);
+                }
+                else
+                {
+                    pressed = true;
+                    mouseController.Invoke(Define.MouseMode.Click);
+                }
             }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                pressed = false;
+            }
+
         }
     }
 }
