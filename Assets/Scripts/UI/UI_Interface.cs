@@ -35,7 +35,14 @@ public class UI_Interface : MonoBehaviour
 
     private void Awake()
     {
-        Bind<GameObject>(typeof(GameObjects));
+        Bind<Image>(typeof(Images));
+        Bind<Button>(typeof(Buttons));
+        Bind<TextMeshProUGUI>(typeof(Texts));
+    }
+
+    private void Start()
+    {
+        GetText((int)Texts.Score_TMPText).text = "GetText complete";
     }
 
     public void Bind<T>(Type type) where T : UnityEngine.Object
@@ -56,4 +63,20 @@ public class UI_Interface : MonoBehaviour
             }
         }
     }
+
+    public T Get<T>(int index) where T: UnityEngine.Object
+    {
+        UnityEngine.Object[] objects = null;
+        if ( UI_Storage.TryGetValue(typeof(T), out objects) )
+        {
+            return objects[index] as T;
+        }
+
+        Debug.Log($"Couldn't find the {index}th object in {typeof(T)}");
+        return null;
+    }
+    
+    public Image GetImage(int index) { return Get<Image>(index); }
+    public Button GetButton(int index) { return Get<Button>(index); }
+    public TextMeshProUGUI GetText(int index) { return Get<TextMeshProUGUI>(index); }
 }

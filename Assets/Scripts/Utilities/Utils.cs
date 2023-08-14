@@ -25,7 +25,7 @@ public static class Utils
             }
         }
 
-        Debug.Log($"Couldn't find the {typeof(T)} in {TopParent.name} object");
+        Debug.Log($"Couldn't find the \"{typeof(T).Name}\" component or \"{name}\" in {TopParent.name} object");
         return null;
     }
 
