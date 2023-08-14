@@ -42,7 +42,7 @@ public class UI_Interface : MonoBehaviour
 
     private void Start()
     {
-        GetText((int)Texts.Score_TMPText).text = "GetText complete";
+        //GetText((int)Texts.Score_TMPText).text = "GetText complete";
     }
 
     public void Bind<T>(Type type) where T : UnityEngine.Object
@@ -75,8 +75,13 @@ public class UI_Interface : MonoBehaviour
         Debug.Log($"Couldn't find the {index}th object in {typeof(T)}");
         return null;
     }
-    
     public Image GetImage(int index) { return Get<Image>(index); }
     public Button GetButton(int index) { return Get<Button>(index); }
     public TextMeshProUGUI GetText(int index) { return Get<TextMeshProUGUI>(index); }
+
+    int score = 0;
+    public void IncreaseScore()
+    {
+        GetText((int)Texts.Score_TMPText).text = $"Score: {++score}";
+    }
 }
