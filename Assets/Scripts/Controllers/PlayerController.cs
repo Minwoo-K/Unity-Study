@@ -57,13 +57,13 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = destination - transform.position; // Direction Vector from the Current Position to the Destination
         if (dir.magnitude <= 0.01f) // If Distance Left is less than 0.01,
         {
-            playerMode = PlayerMode.Idle; // Stop Moving and Change the Mode to IDLE
+            playerMode = PlayerMode.Idle; // Stop Moving and Change the PlayerMode to IDLE
             return;
         }
 
         float dist = Mathf.Clamp(moveSpeed * Time.deltaTime, 0, dir.magnitude);
         transform.position += dir.normalized * dist; // Each Frame, Move to the Direction by (moveSpeed X deltaTime)
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), moveSpeed * Time.deltaTime * 0.5f); // Slowly Rotate towards the Direction
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), moveSpeed * Time.deltaTime); // Rotate towards the Direction
 
         animator.SetFloat("Wait_Run_Ratio", 1);
     }
