@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_Interface : MonoBehaviour
@@ -35,14 +36,16 @@ public class UI_Interface : MonoBehaviour
 
     private void Awake()
     {
-        Bind<Image>(typeof(Images));
+        //Bind<Image>(typeof(Images));
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
     }
 
     private void Start()
     {
-        //GetText((int)Texts.Score_TMPText).text = "GetText complete";
+        GameObject go = GetText((int)Texts.Score_TMPText).gameObject;
+        UI_EventHandler evt = Utils.AddOrGetComponent<UI_EventHandler>(go);
+        Utils.AddEventHandler(go, (PointerEventData data) => { evt.gameObject.transform.position = data.position; }, Define.EventType.Drag);
     }
 
     public void Bind<T>(Type type) where T : UnityEngine.Object

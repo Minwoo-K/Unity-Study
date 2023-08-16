@@ -9,4 +9,10 @@ public class Define
         Click,
         Press
     }
+
+    public enum EventType
+    {
+        Click,
+        Drag,
+    }
 }
