@@ -1,9 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public static class Utils
 {
+    public static T AddOrGetComponent<T>(GameObject go) where T: Component
+    {
+        T component = go.GetComponent<T>();
+        if ( component == null )
+        {
+            component = go.AddComponent<T>();
+        }
+
+        return component;
+    }
+
     public static T FindChild<T>(GameObject TopParent, string name = null, bool recursive = false) where T : UnityEngine.Object
     {
         if (recursive)
