@@ -41,7 +41,7 @@ public class UI_Interface : UI_Base
         GameObject go = GetText((int)Texts.Score_TMPText).gameObject;
         UI_EventHandler evt = go.AddOrGetComponent<UI_EventHandler>();
 
-        go.AddEventHandler((PointerEventData data) => { evt.gameObject.transform.position = data.position; }, Define.EventType.Drag);
+        go.AddUIEvent((PointerEventData data) => { evt.gameObject.transform.position = data.position; }, Define.EventType.Drag);
     }
 
     private void Start()

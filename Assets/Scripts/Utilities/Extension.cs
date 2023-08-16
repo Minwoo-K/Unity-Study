@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public static class Extension
 {
-    public static UI_EventHandler AddEventHandler(this GameObject go, Action<PointerEventData> action, Define.EventType evtType = Define.EventType.Click)
+    public static UI_EventHandler AddUIEvent(this GameObject go, Action<PointerEventData> action, Define.EventType evtType = Define.EventType.Click)
     {
-        return Utils.AddEventHandler(go, action, evtType);
+        return UI_Base.AddUIEvent(go, action, evtType);
     }
 
     public static T AddOrGetComponent<T>(this GameObject go) where T: Component

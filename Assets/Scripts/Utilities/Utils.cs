@@ -47,23 +47,4 @@ public static class Utils
         Transform child = FindChild<Transform>(TopParent, name, recursive);
         return child.gameObject;
     }
-
-    public static UI_EventHandler AddEventHandler(GameObject go, Action<PointerEventData> action, Define.EventType evtType = Define.EventType.Click)
-    {
-        UI_EventHandler eventHandler = AddOrGetComponent<UI_EventHandler>(go);
-
-        switch (evtType)
-        {
-            case Define.EventType.Click:
-                eventHandler.ClickHandler -= action;
-                eventHandler.ClickHandler += action;
-                break;
-            case Define.EventType.Drag:
-                eventHandler.DragHandler -= action;
-                eventHandler.DragHandler += action;
-                break;
-        }
-
-        return eventHandler;
-    }
 }
