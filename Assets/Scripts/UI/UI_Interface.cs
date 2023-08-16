@@ -44,8 +44,9 @@ public class UI_Interface : MonoBehaviour
     private void Start()
     {
         GameObject go = GetText((int)Texts.Score_TMPText).gameObject;
-        UI_EventHandler evt = Utils.AddOrGetComponent<UI_EventHandler>(go);
-        Utils.AddEventHandler(go, (PointerEventData data) => { evt.gameObject.transform.position = data.position; }, Define.EventType.Drag);
+        UI_EventHandler evt = go.AddOrGetComponent<UI_EventHandler>();
+
+        go.AddEventHandler((PointerEventData data) => { evt.gameObject.transform.position = data.position; }, Define.EventType.Drag);
     }
 
     public void Bind<T>(Type type) where T : UnityEngine.Object
