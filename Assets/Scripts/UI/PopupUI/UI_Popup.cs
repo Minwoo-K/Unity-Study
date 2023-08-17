@@ -22,4 +22,9 @@ public class UI_Popup : UI_Base
         //canvasScaler.matchWidthOrHeight = 0.5f;
         //canvasScaler.referenceResolution = 
     }
+
+    public void ClosePopupUI()
+    {
+        GameManager.UI.ClosePopupUI(this);
+    }
 }

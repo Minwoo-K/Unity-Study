@@ -26,7 +26,7 @@ public class ResourceManager
         return go;
     }
 
-    public void Destroy(GameObject go, float inTime)
+    public void Destroy(GameObject go, float inTime = 0)
     {
         if (go == null)
         {

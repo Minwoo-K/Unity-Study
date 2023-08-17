@@ -53,6 +53,7 @@ public class UIManager
         T popup = clone.AddOrGetComponent<T>();
         popup.name = path;
         //popup.transform.SetParent(UI_Popup.PopupUI_Root);
+        SortingOrder++;
 
         PopupUI_Storage.Push(popup);
 
@@ -77,5 +78,31 @@ public class UIManager
         scene.transform.SetParent(UI_Root);
 
         return scene;
+    }
+
+    public void ClosePopupUI()
+    {
+        if (PopupUI_Storage.Count == 0)
+            return;
+
+        GameManager.Resource.Destroy(PopupUI_Storage.Pop().gameObject);
+        SortingOrder--;
+    }
+
+    public void ClosePopupUI(UI_Popup popup)
+    {
+        if (PopupUI_Storage.Peek() != popup)
+        {
+            Debug.LogError("Closing a non-latest PopupUI is not allowed.");
+            return;
+        }
+
+        ClosePopupUI();
+    }
+
+    public void CloseAllPopupUI()
+    {
+        while (PopupUI_Storage.Count != 0)
+            ClosePopupUI();
     }
 }
