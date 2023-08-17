@@ -8,7 +8,8 @@ public class UIManager
     protected Stack<UI_Popup> PopupUI_Storage = new Stack<UI_Popup>();  // Where to save all of Pop-up UIs
     protected UI_Scene SceneUI = null;                                  // Where to save ONE scene UI
     public int SortingOrder { get; set; }                            // To track order of Pop-up UIs
-    public Transform UI_Root { get; private set; } = null;
+    public Transform UI_Root { get; private set; }
+    public Transform PopupUI_Root { get; private set; }
 
     public void Init()
     {
@@ -17,6 +18,10 @@ public class UIManager
         {
             go = new GameObject() { name = "#UI" };
             UI_Root = go.transform;
+
+            GameObject go2 = new GameObject() { name = "#Popup UI" };
+            PopupUI_Root = go2.transform;
+            PopupUI_Root.SetParent(UI_Root);
         }
 
         SortingOrder = 10;
@@ -28,7 +33,9 @@ public class UIManager
             Object.DontDestroyOnLoad(evtsys);
         }
 
+        // Testing
         ShowSceneUI<UI_Interface>();
+        ShowPopupUI<UI_Inventory>();
     }
 
     public T ShowPopupUI<T>(string path = null) where T: UI_Popup
@@ -45,7 +52,7 @@ public class UIManager
 
         T popup = clone.AddOrGetComponent<T>();
         popup.name = path;
-        popup.transform.SetParent(UI_Popup.PopupUI_Root);
+        //popup.transform.SetParent(UI_Popup.PopupUI_Root);
 
         PopupUI_Storage.Push(popup);
 

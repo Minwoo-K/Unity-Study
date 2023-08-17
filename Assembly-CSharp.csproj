@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUI\UI_Scene.cs" />
     <Compile Include="Assets\Scripts\UI\PopupUI\UI_Popup.cs" />
+    <Compile Include="Assets\Scripts\UI\PopupUI\UI_Inventory.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Arts\UnityChan\Art\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
