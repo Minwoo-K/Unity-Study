@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_Interface : UI_Base
+public class UI_Interface : UI_Scene
 {
     private enum Images
     {
