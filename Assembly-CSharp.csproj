@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Scene\Scene_Base.cs" />
     <Compile Include="Assets\Scripts\Scene\Scene_Game.cs" />
     <Compile Include="Assets\Scripts\Scene\Scene_Login.cs" />
+    <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Arts\UnityChan\Art\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />

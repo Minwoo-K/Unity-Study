@@ -13,7 +13,7 @@ public class Scene_Game : Scene_Base
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            GameManager.Scene.LoadScene(Define.Scenes.Login);
+            GameManager.Scene.LoadScene(Define.SceneType.Login);
         }
     }
 
@@ -21,9 +21,9 @@ public class Scene_Game : Scene_Base
     {
         base.Init();
 
-        currentScene = Define.Scenes.Game;
+        currentScene = Define.SceneType.Game;
 
         Debug.Log(GameManager.Scene.currentScene);
-        Debug.Log($"Current Scene: {System.Enum.GetName(typeof(Define.Scenes), currentScene)}");
+        Debug.Log($"Current Scene: {System.Enum.GetName(typeof(Define.SceneType), currentScene)}");
     }
 }

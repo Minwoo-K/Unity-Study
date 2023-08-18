@@ -8,14 +8,14 @@ public class SceneManagerEx
 {
     public Scene_Base currentScene { get { return Object.FindObjectOfType<Scene_Base>(); } }
 
-    public void LoadScene(Define.Scenes SceneType)
+    public void LoadScene(Define.SceneType SceneType)
     {
         string sceneName = GetSceneName(SceneType);
         SceneManager.LoadScene(sceneName);
     }
 
-    private string GetSceneName(Define.Scenes SceneType)
+    private string GetSceneName(Define.SceneType SceneType)
     {
-        return System.Enum.GetName(typeof(Define.Scenes), SceneType);
+        return System.Enum.GetName(typeof(Define.SceneType), SceneType);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Scene_Base : MonoBehaviour
 {
-    protected Define.Scenes currentScene = Define.Scenes.None;
+    protected Define.SceneType currentScene = Define.SceneType.None;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class Scene_Base : MonoBehaviour
 
     public string GetCurrentSceneName()
     {
-        return System.Enum.GetName(typeof(Define.Scenes), currentScene);
+        return System.Enum.GetName(typeof(Define.SceneType), currentScene);
     }
 
 }
