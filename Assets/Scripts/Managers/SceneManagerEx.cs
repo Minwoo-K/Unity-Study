@@ -6,16 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerEx
 {
-    public Scene_Base currentScene { get; private set; }
+    public Scene_Base currentScene { get { return Object.FindObjectOfType<Scene_Base>(); } }
 
-    public void Init()
+    public void LoadScene(Define.Scenes SceneType)
     {
-        
+        string sceneName = GetSceneName(SceneType);
+        SceneManager.LoadScene(sceneName);
     }
 
-    public void LoadScene<T>(string name) where T: Scene_Base
+    private string GetSceneName(Define.Scenes SceneType)
     {
-        
-
+        return System.Enum.GetName(typeof(Define.Scenes), SceneType);
     }
 }
