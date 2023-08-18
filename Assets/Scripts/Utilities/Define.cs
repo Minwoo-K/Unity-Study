@@ -11,6 +11,12 @@ public class Define
         Game,
     }
 
+    public enum AudioSourceType
+    {
+        Background,
+        SoundEfx,
+    }
+
     public enum MouseMode
     {
         Click,

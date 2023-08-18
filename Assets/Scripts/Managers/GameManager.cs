@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(go);
 
             _instance._ui.Init();
+            _instance._sound.Init();
         }
     }
 }
