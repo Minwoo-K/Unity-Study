@@ -8,11 +8,13 @@ public class GameManager : MonoBehaviour
     private ResourceManager _resource = new ResourceManager();
     private InputManager _input = new InputManager();
     private UIManager _ui = new UIManager();
+    private SceneManagerEx _scene = new SceneManagerEx();
 
     public static GameManager Instance { get { Init(); return _instance; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
     public static InputManager Input { get { return Instance._input; } }
     public static UIManager UI { get { return Instance._ui; } }
+    public static SceneManagerEx Scene { get { return Instance._scene; } }
 
     void Start()
     {
