@@ -26,13 +26,6 @@ public class UIManager
 
         SortingOrder = 10;
 
-        if ( GameObject.FindObjectOfType<EventSystem>() == null )
-        {
-            GameObject evtsys = GameManager.Resource.Instantiate("UI/EventSystem");
-            evtsys.name = "#EventSystem";
-            Object.DontDestroyOnLoad(evtsys);
-        }
-
         // Testing
         ShowSceneUI<UI_Interface>();
         ShowPopupUI<UI_Inventory>();

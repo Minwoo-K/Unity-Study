@@ -72,6 +72,9 @@
     <Compile Include="Assets\Scripts\UI\PopupUI\UI_Inventory.cs" />
     <Compile Include="Assets\Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SceneManagerEx.cs" />
+    <Compile Include="Assets\Scripts\Scene\Scene_Base.cs" />
+    <Compile Include="Assets\Scripts\Scene\Scene_Game.cs" />
+    <Compile Include="Assets\Scripts\Scene\Scene_Login.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Arts\UnityChan\Art\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />

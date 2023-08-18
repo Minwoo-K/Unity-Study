@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
-public class SceneManagerEx : MonoBehaviour
+public class SceneManagerEx
 {
-    void Start()
+    public Scene_Base currentScene { get; private set; }
+
+    public void Init()
     {
         
     }
 
-    void Update()
+    public void LoadScene<T>(string name) where T: Scene_Base
     {
         
+
     }
 }
