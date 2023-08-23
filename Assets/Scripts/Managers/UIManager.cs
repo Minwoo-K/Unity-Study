@@ -26,13 +26,6 @@ public class UIManager
 
         SortingOrder = 10;
 
-        if ( GameObject.FindObjectOfType<EventSystem>() == null )
-        {
-            GameObject evtsys = GameManager.Resource.Instantiate("UI/EventSystem");
-            evtsys.name = "#EventSystem";
-            Object.DontDestroyOnLoad(evtsys);
-        }
-
         // Testing
         ShowSceneUI<UI_Interface>();
         ShowPopupUI<UI_Inventory>();
@@ -104,5 +97,13 @@ public class UIManager
     {
         while (PopupUI_Storage.Count != 0)
             ClosePopupUI();
+    }
+
+    public void Clear()
+    {
+        PopupUI_Storage.Clear();
+        SceneUI = null;
+        UI_Root = null;
+        PopupUI_Root = null;
     }
 }
