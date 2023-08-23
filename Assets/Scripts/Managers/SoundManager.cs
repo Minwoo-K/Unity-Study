@@ -10,9 +10,12 @@ public class SoundManager
 
     public void Init()
     {
-        GameObject root = new GameObject() { name = "#SoundManager" };
-        //DontDestroyOnLoad(go); // if needed
-        Sound_Root = root.transform;
+        if ( Sound_Root == null )
+        {
+            GameObject root = new GameObject() { name = "#SoundManager" };
+            //DontDestroyOnLoad(go); // if needed
+            Sound_Root = root.transform;
+        }
 
         string[] soundTypes = Enum.GetNames(typeof(Define.AudioSourceType));
         for ( int i = 0; i < soundTypes.Length - 1; i++ )
@@ -51,5 +54,46 @@ public class SoundManager
                 source.playOnAwake = false;
                 break;
         }
+    }
+
+    private AudioClip LoadClip(string location)
+    {
+        AudioClip audioClip = GameManager.Resource.Load<AudioClip>($"Sounds/{location}");
+        
+        if ( audioClip == null )
+        {
+            Debug.Log($"couldn't find an AudioClip named {location}");
+            return null;
+        }
+
+        return audioClip;
+    }
+
+    public void Play(string audioLocation, Define.AudioSourceType sourceType = Define.AudioSourceType.SoundEfx, float pitch = 1f)
+    {
+        AudioClip audioClip = LoadClip(audioLocation);
+        Play(audioClip, sourceType, pitch);
+    }
+
+    public void Play(AudioClip audioClip, Define.AudioSourceType sourceType = Define.AudioSourceType.SoundEfx, float pitch = 1f)
+    {
+        if (audioClip == null)
+            return;
+
+        AudioSource source = AudioSources[(int)sourceType];
+        if (source.isPlaying)
+        {
+            source.Stop();
+        }
+
+        source.clip = audioClip;
+        source.pitch = pitch;
+        source.Play();
+    }
+
+    public void Clear()
+    {
+        Sound_Root = null;
+        AudioSources.Clear();
     }
 }

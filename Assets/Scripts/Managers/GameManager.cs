@@ -46,4 +46,10 @@ public class GameManager : MonoBehaviour
             _instance._sound.Init();
         }
     }
+
+    public static void Clear()
+    {
+        _instance._sound.Clear();
+        _instance._ui.Clear();
+    }
 }

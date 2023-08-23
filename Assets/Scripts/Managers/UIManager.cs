@@ -98,4 +98,12 @@ public class UIManager
         while (PopupUI_Storage.Count != 0)
             ClosePopupUI();
     }
+
+    public void Clear()
+    {
+        PopupUI_Storage.Clear();
+        SceneUI = null;
+        UI_Root = null;
+        PopupUI_Root = null;
+    }
 }
