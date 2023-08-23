@@ -5,25 +5,30 @@ using System;
 
 public class SoundManager
 {
+    private AudioSource[] AudioSources;
+    private Dictionary<string, AudioClip> SoundEfx_Storage = new Dictionary<string, AudioClip>();
+
     public Transform Sound_Root { get; private set; }
-    private Dictionary<int, AudioSource> AudioSources = new Dictionary<int, AudioSource>();
+
 
     public void Init()
     {
-        if ( Sound_Root == null )
+        GameObject root = GameObject.Find("#SoundManager");
+        if ( root == null )
         {
-            GameObject root = new GameObject() { name = "#SoundManager" };
+            root = new GameObject() { name = "#SoundManager" };
             //DontDestroyOnLoad(go); // if needed
-            Sound_Root = root.transform;
         }
+        Sound_Root = root.transform;
 
         string[] soundTypes = Enum.GetNames(typeof(Define.AudioSourceType));
+        AudioSources = new AudioSource[soundTypes.Length - 1]; // "Length-1" is to exclude the "Count" in the enum
+
         for ( int i = 0; i < soundTypes.Length - 1; i++ )
         {
             GameObject go = new GameObject() { name = soundTypes[i] };
             go.transform.parent = Sound_Root;
-            AudioSource audioSource = go.AddComponent<AudioSource>();
-            AudioSources.Add(i, audioSource);
+            AudioSources[i] = go.AddComponent<AudioSource>();
             SourceSetup(i);
         }
     }
@@ -94,6 +99,7 @@ public class SoundManager
     public void Clear()
     {
         Sound_Root = null;
-        AudioSources.Clear();
+        AudioSources = null;
+        SoundEfx_Storage.Clear();
     }
 }
