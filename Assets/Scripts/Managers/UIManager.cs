@@ -25,10 +25,6 @@ public class UIManager
         }
 
         SortingOrder = 10;
-
-        // Testing
-        ShowSceneUI<UI_Interface>();
-        ShowPopupUI<UI_Inventory>();
     }
 
     public T ShowPopupUI<T>(string path = null) where T: UI_Popup

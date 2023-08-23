@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             }
 
             _instance = go.GetComponent<GameManager>();
-            DontDestroyOnLoad(go);
+            //DontDestroyOnLoad(go);
 
             _instance._ui.Init();
             _instance._sound.Init();

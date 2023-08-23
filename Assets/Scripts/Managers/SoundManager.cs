@@ -5,7 +5,7 @@ using System;
 
 public class SoundManager
 {
-    private AudioSource[] AudioSources;
+    private AudioSource[] AudioSources = new AudioSource[(int)Define.AudioSourceType.Count];
     private Dictionary<string, AudioClip> AudioClip_pool = new Dictionary<string, AudioClip>();
 
     public Transform Sound_Root { get; private set; }
@@ -17,14 +17,12 @@ public class SoundManager
         if ( root == null )
         {
             root = new GameObject() { name = "#SoundManager" };
-            //DontDestroyOnLoad(go); // if needed
         }
         Sound_Root = root.transform;
-
+        
         string[] soundTypes = Enum.GetNames(typeof(Define.AudioSourceType));
-        AudioSources = new AudioSource[soundTypes.Length - 1]; // "Length-1" is to exclude the "Count" in the enum
 
-        for ( int i = 0; i < soundTypes.Length - 1; i++ )
+        for (int i = 0; i < soundTypes.Length - 1; i++) // "Length-1" is to exclude the "Count" in the enum
         {
             GameObject go = new GameObject() { name = soundTypes[i] };
             go.transform.parent = Sound_Root;
