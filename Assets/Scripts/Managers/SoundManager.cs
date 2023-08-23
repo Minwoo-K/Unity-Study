@@ -6,7 +6,7 @@ using System;
 public class SoundManager
 {
     private AudioSource[] AudioSources;
-    private Dictionary<string, AudioClip> SoundEfx_Storage = new Dictionary<string, AudioClip>();
+    private Dictionary<string, AudioClip> AudioClip_pool = new Dictionary<string, AudioClip>();
 
     public Transform Sound_Root { get; private set; }
 
@@ -61,22 +61,31 @@ public class SoundManager
         }
     }
 
-    private AudioClip LoadClip(string location)
+    private AudioClip GetOrAddAudioClip(string location)
     {
-        AudioClip audioClip = GameManager.Resource.Load<AudioClip>($"Sounds/{location}");
-        
+        AudioClip audioClip = null;
+        if ( AudioClip_pool.TryGetValue(location, out audioClip) )
+        {
+            return audioClip;
+        }
+        else
+        {
+            audioClip = GameManager.Resource.Load<AudioClip>($"Sounds/{location}");
+        }
+
         if ( audioClip == null )
         {
             Debug.Log($"couldn't find an AudioClip named {location}");
             return null;
         }
 
+        AudioClip_pool.Add(location, audioClip);
         return audioClip;
     }
 
     public void Play(string audioLocation, Define.AudioSourceType sourceType = Define.AudioSourceType.SoundEfx, float pitch = 1f)
     {
-        AudioClip audioClip = LoadClip(audioLocation);
+        AudioClip audioClip = GetOrAddAudioClip(audioLocation);
         Play(audioClip, sourceType, pitch);
     }
 
@@ -100,6 +109,6 @@ public class SoundManager
     {
         Sound_Root = null;
         AudioSources = null;
-        SoundEfx_Storage.Clear();
+        AudioClip_pool.Clear();
     }
 }
