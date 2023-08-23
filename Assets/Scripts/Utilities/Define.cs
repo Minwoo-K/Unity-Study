@@ -15,6 +15,9 @@ public class Define
     {
         Background,
         SoundEfx,
+        Narration,
+
+        Count
     }
 
     public enum MouseMode
