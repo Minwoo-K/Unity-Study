@@ -95,14 +95,23 @@ public class SoundManager
             return;
 
         AudioSource source = AudioSources[(int)sourceType];
-        if (source.isPlaying)
+        if ( sourceType != Define.AudioSourceType.SoundEfx )
         {
-            source.Stop();
-        }
+            if (source.isPlaying)
+            {
+                source.Stop();
+            }
 
-        source.clip = audioClip;
-        source.pitch = pitch;
-        source.Play();
+            source.clip = audioClip;
+            source.pitch = pitch;
+            source.Play();
+        }
+        else
+        {
+            source.pitch = pitch;
+            source.PlayOneShot(audioClip);
+        }
+        
     }
 
     public void Clear()
