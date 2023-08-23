@@ -6,7 +6,7 @@ public class Scene_Game : Scene_Base
 {
     void Start()
     {
-        
+        GameManager.Sound.Play("UnityChan/univ1335", Define.AudioSourceType.Background);
     }
 
     void Update()
@@ -14,6 +14,11 @@ public class Scene_Game : Scene_Base
         if (Input.GetKeyDown(KeyCode.C))
         {
             GameManager.Scene.LoadScene(Define.SceneType.Login);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameManager.Sound.Play("UnityChan/univ1278");
         }
     }
 

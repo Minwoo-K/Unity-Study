@@ -34,4 +34,8 @@ public class Scene_Base : MonoBehaviour
         return System.Enum.GetName(typeof(Define.SceneType), currentScene);
     }
 
+    public virtual void Clear()
+    {
+        GameManager.Clear();
+    }
 }

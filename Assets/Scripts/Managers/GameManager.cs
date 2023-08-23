@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private UIManager _ui = new UIManager();
     private SceneManagerEx _scene = new SceneManagerEx();
     private SoundManager _sound = new SoundManager();
+    private PoolManager _pool = new PoolManager();
 
     public static GameManager Instance { get { Init(); return _instance; } }
     public static ResourceManager Resource { get { return Instance._resource; } }
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     public static UIManager UI { get { return Instance._ui; } }
     public static SceneManagerEx Scene { get { return Instance._scene; } }
     public static SoundManager Sound { get { return Instance._sound; } }
+    public static PoolManager Pool { get { return Instance._pool; } }
 
     void Start()
     {
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour
             }
 
             _instance = go.GetComponent<GameManager>();
-            DontDestroyOnLoad(go);
+            //DontDestroyOnLoad(go);
 
             _instance._ui.Init();
             _instance._sound.Init();

@@ -5,25 +5,28 @@ using System;
 
 public class SoundManager
 {
+    private AudioSource[] AudioSources = new AudioSource[(int)Define.AudioSourceType.Count];
+    private Dictionary<string, AudioClip> AudioClip_pool = new Dictionary<string, AudioClip>();
+
     public Transform Sound_Root { get; private set; }
-    private Dictionary<int, AudioSource> AudioSources = new Dictionary<int, AudioSource>();
+
 
     public void Init()
     {
-        if ( Sound_Root == null )
+        GameObject root = GameObject.Find("#SoundManager");
+        if ( root == null )
         {
-            GameObject root = new GameObject() { name = "#SoundManager" };
-            //DontDestroyOnLoad(go); // if needed
-            Sound_Root = root.transform;
+            root = new GameObject() { name = "#SoundManager" };
         }
-
+        Sound_Root = root.transform;
+        
         string[] soundTypes = Enum.GetNames(typeof(Define.AudioSourceType));
-        for ( int i = 0; i < soundTypes.Length - 1; i++ )
+
+        for (int i = 0; i < soundTypes.Length - 1; i++) // "Length-1" is to exclude the "Count" in the enum
         {
             GameObject go = new GameObject() { name = soundTypes[i] };
             go.transform.parent = Sound_Root;
-            AudioSource audioSource = go.AddComponent<AudioSource>();
-            AudioSources.Add(i, audioSource);
+            AudioSources[i] = go.AddComponent<AudioSource>();
             SourceSetup(i);
         }
     }
@@ -56,22 +59,31 @@ public class SoundManager
         }
     }
 
-    private AudioClip LoadClip(string location)
+    private AudioClip GetOrAddAudioClip(string location)
     {
-        AudioClip audioClip = GameManager.Resource.Load<AudioClip>($"Sounds/{location}");
-        
+        AudioClip audioClip = null;
+        if ( AudioClip_pool.TryGetValue(location, out audioClip) )
+        {
+            return audioClip;
+        }
+        else
+        {
+            audioClip = GameManager.Resource.Load<AudioClip>($"Sounds/{location}");
+        }
+
         if ( audioClip == null )
         {
             Debug.Log($"couldn't find an AudioClip named {location}");
             return null;
         }
 
+        AudioClip_pool.Add(location, audioClip);
         return audioClip;
     }
 
     public void Play(string audioLocation, Define.AudioSourceType sourceType = Define.AudioSourceType.SoundEfx, float pitch = 1f)
     {
-        AudioClip audioClip = LoadClip(audioLocation);
+        AudioClip audioClip = GetOrAddAudioClip(audioLocation);
         Play(audioClip, sourceType, pitch);
     }
 
@@ -81,19 +93,29 @@ public class SoundManager
             return;
 
         AudioSource source = AudioSources[(int)sourceType];
-        if (source.isPlaying)
+        if ( sourceType != Define.AudioSourceType.SoundEfx )
         {
-            source.Stop();
-        }
+            if (source.isPlaying)
+            {
+                source.Stop();
+            }
 
-        source.clip = audioClip;
-        source.pitch = pitch;
-        source.Play();
+            source.clip = audioClip;
+            source.pitch = pitch;
+            source.Play();
+        }
+        else
+        {
+            source.pitch = pitch;
+            source.PlayOneShot(audioClip);
+        }
+        
     }
 
     public void Clear()
     {
         Sound_Root = null;
-        AudioSources.Clear();
+        AudioSources = null;
+        AudioClip_pool.Clear();
     }
 }

@@ -11,7 +11,9 @@ public class SceneManagerEx
     public void LoadScene(Define.SceneType SceneType)
     {
         string sceneName = GetSceneName(SceneType);
+        currentScene.Clear();
         SceneManager.LoadScene(sceneName);
+        GameManager.Init();
     }
 
     private string GetSceneName(Define.SceneType SceneType)
