@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
 
             _instance._ui.Init();
             _instance._sound.Init();
+            _instance._pool.Init();
         }
     }
 
@@ -53,5 +54,6 @@ public class GameManager : MonoBehaviour
     {
         _instance._sound.Clear();
         _instance._ui.Clear();
+        _instance._pool.Clear();
     }
 }

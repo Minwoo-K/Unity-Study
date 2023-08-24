@@ -16,6 +16,8 @@ public class PoolManager
         
         public void Init(GameObject original, int size, bool resizeable = true)
         {
+            Original = original;
+
             if (Root == null)
             {
                 GameObject go = GameObject.Find($"#Pool: {Original.name}");
@@ -27,7 +29,6 @@ public class PoolManager
 
                 Root.parent = GameManager.Pool.Root;
 
-                this.Original = original;
                 this.size = size;
                 this.resizeable = resizeable;
 
@@ -55,7 +56,7 @@ public class PoolManager
             return poolable;
         }
 
-        public Poolable Pop(Transform parent)
+        public Poolable Pop(Transform parent = null)
         {
             Poolable poolable = null;
 
@@ -69,6 +70,7 @@ public class PoolManager
                 }
                 else
                 {
+                    Debug.Log($"The Pool has reached its limit of use: {Original.name}");
                     return null;
                 }
             }
@@ -79,7 +81,8 @@ public class PoolManager
 
             poolable.inUse = true;
             poolable.gameObject.SetActive(true);
-            poolable.transform.parent = parent;
+            if ( parent != null )
+                poolable.transform.parent = parent;
 
             return poolable;
         }
@@ -131,21 +134,54 @@ public class PoolManager
 
     public void CreatePool(GameObject original, int size, bool resizeable = true)
     {
-
+        Pool pool = new Pool();
+        pool.Init(original, size, resizeable);
+        Pools.Add(original.name, pool);
     }
 
-    public Poolable Pop()
+    public GameObject Pop(GameObject original, Transform parent = null)
     {
-        return null;
+        Pool pool = null;
+        Poolable poolable = null;
+
+        if ( Pools.TryGetValue(original.name, out pool) )
+        {
+            poolable = pool.Pop(parent);
+        }
+        else
+        {
+            if (original.GetComponent<Poolable>() != null)
+            {
+                CreatePool(original, 5);
+                pool = Pools[original.name];
+                poolable = pool.Pop(parent);
+            }
+        }
+
+        if ( poolable == null )
+        {
+            Debug.Log($"Failed to pop from the Pool: {original.name}");
+            return null;
+        }
+        
+        return poolable.gameObject;
     }
 
     public void Push(Poolable poolable)
     {
-
+        if (Pools.ContainsKey(poolable.name))
+        {
+            Pools[poolable.name].Push(poolable);
+            Debug.Log("Successfully pooled back");
+        }
     }
 
     public void Clear()
     {
-
+        foreach (Transform transform in Root)
+        {
+            Object.Destroy(transform);
+            Pools.Clear();
+        }
     }
 }
