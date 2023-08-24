@@ -17,6 +17,15 @@ public class ResourceManager
             Debug.Log($"[ResourceManager>Instantiate]: Couldn't find the object on [Prefabs/{path}]");
             return null;
         }
+        // 1) is it poolable?
+        if ( clone.GetComponent<Poolable>() != null)
+        {
+            GameObject pooled = GameManager.Pool.Pop(clone, parent);
+            if (pooled != null)
+            {
+                return pooled;
+            }
+        }
 
         GameObject go = Object.Instantiate(clone);
         go.name = path;
@@ -32,6 +41,12 @@ public class ResourceManager
         {
             Debug.Log($"[ResourceManager>Destroy]: the object {go.name} doesn't exist!");
             return;
+        }
+
+        Poolable poolable = go.GetComponent<Poolable>();
+        if ( poolable != null )
+        {
+            GameManager.Pool.Push(poolable);
         }
 
         Object.Destroy(go, inTime);
