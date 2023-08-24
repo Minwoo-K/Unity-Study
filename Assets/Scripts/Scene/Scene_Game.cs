@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Scene_Game : Scene_Base
 {
+    private Stack<Poolable> pooledObjects = new Stack<Poolable>();
     void Start()
     {
         GameManager.Sound.Play("UnityChan/univ1335", Define.AudioSourceType.Background);
+        Poolable go = GameManager.Resource.Instantiate("Box").GetComponent<Poolable>();
+        pooledObjects.Push(go);
     }
 
     void Update()
@@ -19,6 +22,18 @@ public class Scene_Game : Scene_Base
         if (Input.GetKeyDown(KeyCode.P))
         {
             GameManager.Sound.Play("UnityChan/univ1278");
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            Poolable go = GameManager.Resource.Instantiate("Box").GetComponent<Poolable>();
+            pooledObjects.Push(go);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Poolable go = pooledObjects.Pop();
+            GameManager.Resource.Destroy(go.gameObject);
         }
     }
 

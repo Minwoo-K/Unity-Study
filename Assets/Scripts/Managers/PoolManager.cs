@@ -16,6 +16,8 @@ public class PoolManager
         
         public void Init(GameObject original, int size, bool resizeable = true)
         {
+            Original = original;
+
             if (Root == null)
             {
                 GameObject go = GameObject.Find($"#Pool: {Original.name}");
@@ -27,7 +29,6 @@ public class PoolManager
 
                 Root.parent = GameManager.Pool.Root;
 
-                this.Original = original;
                 this.size = size;
                 this.resizeable = resizeable;
 

@@ -47,6 +47,7 @@ public class ResourceManager
         if ( poolable != null )
         {
             GameManager.Pool.Push(poolable);
+            return;
         }
 
         Object.Destroy(go, inTime);
