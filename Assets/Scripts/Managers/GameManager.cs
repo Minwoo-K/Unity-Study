@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
             _instance._ui.Init();
             _instance._sound.Init();
             _instance._pool.Init();
+            _instance._data.Init();
         }
     }
 
