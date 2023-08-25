@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripts\Scene\Scene_Game.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
     <Compile Include="Assets\Scripts\Scene\Scene_Login.cs" />
     <Compile Include="Assets\Scripts\UI\PopupUI\UI_Popup.cs" />
     <Compile Include="Assets\Scripts\UI\UI_EventHandler.cs" />
@@ -78,7 +79,6 @@
     <Compile Include="Assets\Scripts\Scene\Scene_Base.cs" />
     <Compile Include="Assets\Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SceneManagerEx.cs" />
-    <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
     <Compile Include="Assets\Scripts\Data\Data.Contents.cs" />
   </ItemGroup>
   <ItemGroup>
