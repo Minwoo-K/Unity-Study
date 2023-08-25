@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public interface IDataLoader<Key, Value>
 {
     public Dictionary<Key, Value> LoadData();
@@ -11,23 +10,18 @@ public interface IDataLoader<Key, Value>
 
 public class DataManager
 {
-    // Data Containers
-    public Dictionary<int, Stat> PlayerStats = new Dictionary<int, Stat>();
+    public Dictionary<int, PlayerStat> playerStats = new Dictionary<int, PlayerStat>();
 
-
-
-    // Initialize any required data here in prior to the start of the game
     public void Init()
     {
-        PlayerStats = LoadJson<StatData, int, Stat>("PlayerStat").LoadData();
+        playerStats = LoadJson<PlayerStats, int, PlayerStat>("PlayerStats").LoadData();
     }
 
-    // Template method to load any Json data into a Data Container
     private T LoadJson<T, Key, Value>(string path) where T: IDataLoader<Key, Value>
     {
         TextAsset asset = GameManager.Resource.Load<TextAsset>($"Data/{path}");
-        T JsonData = JsonUtility.FromJson<T>(asset.text);
+        T data = JsonUtility.FromJson<T>(asset.text);
 
-        return JsonData;
+        return data;
     }
 }

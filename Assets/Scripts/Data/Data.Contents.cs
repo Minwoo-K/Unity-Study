@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-#region Stat
-
+#region PlayerStat
 [Serializable]
-public class Stat
+public class PlayerStat
 {
     public int level;
     public int hp;
@@ -14,20 +13,22 @@ public class Stat
 }
 
 [Serializable]
-public class StatData : IDataLoader<int, Stat>
+public class PlayerStats : IDataLoader<int, PlayerStat>
 {
-    public List<Stat> stats = new List<Stat>();
+    public List<PlayerStat> Stats = new List<PlayerStat>();
 
-    public Dictionary<int, Stat> LoadData()
+    public Dictionary<int, PlayerStat> LoadData()
     {
-        Dictionary<int, Stat> dict = new Dictionary<int, Stat>();
-        foreach (Stat stat in stats)
+        Dictionary<int, PlayerStat> statData = new Dictionary<int, PlayerStat>();
+
+        foreach (PlayerStat stat in Stats)
         {
-            dict.Add(stat.level, stat);
+            statData.Add(stat.level, stat);
         }
 
-        return dict;
+        return statData;
     }
 }
 
 #endregion
+
