@@ -80,6 +80,8 @@
     <Compile Include="Assets\Scripts\Scene\Scene_Base.cs" />
     <Compile Include="Assets\Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SceneManagerEx.cs" />
+    <Compile Include="Assets\Scripts\Contents\Stat.cs" />
+    <Compile Include="Assets\Scripts\Contents\PlayerStat.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Arts\UnityChan\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
