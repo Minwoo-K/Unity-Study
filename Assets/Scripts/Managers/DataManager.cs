@@ -10,11 +10,11 @@ public interface IDataLoader<Key, Value>
 
 public class DataManager
 {
-    public Dictionary<int, PlayerStat> playerStats = new Dictionary<int, PlayerStat>();
+    public Dictionary<int, Data.PlayerStat> playerStats = new Dictionary<int, Data.PlayerStat>();
 
     public void Init()
     {
-        playerStats = LoadJson<PlayerStats, int, PlayerStat>("PlayerStats").LoadData();
+        playerStats = LoadJson<Data.PlayerStats, int, Data.PlayerStat>("PlayerStats").LoadData();
     }
 
     private T LoadJson<T, Key, Value>(string path) where T: IDataLoader<Key, Value>
