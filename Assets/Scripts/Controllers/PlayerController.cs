@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-
         if (Physics.Raycast(transform.position + Vector3.up * 0.5f, dir, 1.0f, LayerMask.GetMask("Obstacle")))
         {
             Debug.Log("Wall detected, Moving stopped");
