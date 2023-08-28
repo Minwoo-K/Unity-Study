@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
         // Do Nothing
     }
 
+    int mask = (1 << (int)Define.Masks.Ground) | (1 << (int)Define.Masks.Enemy);
     private void MouseController(Define.MouseMode mouseMode)
     {
         if (mouseMode == Define.MouseMode.Click)
@@ -100,10 +101,20 @@ public class PlayerController : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); // Get the Ray Point of the Mouse Position
             RaycastHit hitInfo; // To Store the Clicked Point
-            if (Physics.Raycast(ray, out hitInfo, 100f, LayerMask.GetMask("Ground"))) // Raycast from the Screen's Point to the Ground, Storing the Hit Point
+            if (Physics.Raycast(ray, out hitInfo, 100f, mask)) // Raycast from the Screen's Point to the Ground, Storing the Hit Point
             {
                 destination = hitInfo.point; // Set the Destination to the Hit Point
                 playerMode = PlayerMode.Moving;
+
+                if ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Ground )
+                {
+
+                }
+                else // ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Enemy )
+                {
+                    Debug.Log("Enemy hit!");
+
+                }
             }
         }
     }

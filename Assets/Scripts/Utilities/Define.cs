@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Define
 {
+    public enum Masks
+    {
+        Obstacle = 7,
+        Ground = 8,
+        Enemy = 9,
+
+    }
+
     public enum SceneType
     {
         None,
