@@ -57,11 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Managers\Poolable.cs" />
+    <Compile Include="Assets\Scripts\Contents\Stat.cs" />
     <Compile Include="Assets\Scripts\UI\SceneUI\UI_Scene.cs" />
     <Compile Include="Assets\Scripts\Utilities\Utils.cs" />
     <Compile Include="Assets\Scripts\Scene\Scene_Game.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Data\Data.Contents.cs" />
+    <Compile Include="Assets\Scripts\Contents\PlayerStat.cs" />
     <Compile Include="Assets\Scripts\Managers\InputManager.cs" />
     <Compile Include="Assets\Scripts\Managers\DataManager.cs" />
     <Compile Include="Assets\Scripts\Scene\Scene_Login.cs" />
@@ -80,8 +82,6 @@
     <Compile Include="Assets\Scripts\Scene\Scene_Base.cs" />
     <Compile Include="Assets\Scripts\Managers\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SceneManagerEx.cs" />
-    <Compile Include="Assets\Scripts\Contents\Stat.cs" />
-    <Compile Include="Assets\Scripts\Contents\PlayerStat.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Arts\UnityChan\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
