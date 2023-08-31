@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Private Enums
     private enum PlayerMode
     {
         Idle,
@@ -12,19 +13,34 @@ public class PlayerController : MonoBehaviour
         Dead
     }
 
-    [SerializeField]
-    private float moveSpeed; // Any Movement Speed
+    private enum CursorMode
+    {
+        None,
+        Basic,
+        Attack,
+
+    }
+    #endregion
 
     private PlayerMode playerMode = PlayerMode.Idle; // To Distinguish Behaviours based on the Mode
+    private PlayerStat stat;
     private Vector3 destination; // Destination Position when Moving
     private Animator animator;
     private UnityEngine.AI.NavMeshAgent nma;
+    private CursorMode cursorMode = CursorMode.None;
+
+    [SerializeField]
+    private Texture2D[] CursorTextures;
 
     void Start()
     {
         GameManager.Input.mouseController -= MouseController; // To Avoid Duplicate Action
         GameManager.Input.mouseController += MouseController; // Register onto the Input Manager's Action
+
+        stat = GetComponent<PlayerStat>();
+
         animator = GetComponent<Animator>(); // Get the Animator Component at the start
+        
         nma = GetComponent<UnityEngine.AI.NavMeshAgent>();
         //GameManager.Input.keyController -= KeyBoardController;
         //GameManager.Input.keyController += KeyBoardController;
@@ -32,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        UpdateMouseCursor();
+
         switch (playerMode)
         {
             case PlayerMode.Idle:
@@ -70,11 +88,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        float dist = Mathf.Clamp(moveSpeed * Time.deltaTime, 0, dir.magnitude);
+        float dist = Mathf.Clamp(stat.MoveSpeed * Time.deltaTime, 0, dir.magnitude);
         nma.Move(dir.normalized * dist);
 
         //transform.position += dir.normalized * dist; // Each Frame, Move to the Direction by (moveSpeed X deltaTime)
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), moveSpeed * Time.deltaTime); // Rotate towards the Direction
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), stat.MoveSpeed * Time.deltaTime); // Rotate towards the Direction
 
 
         animator.SetFloat("Wait_Run_Ratio", 1);
@@ -105,15 +123,34 @@ public class PlayerController : MonoBehaviour
             {
                 destination = hitInfo.point; // Set the Destination to the Hit Point
                 playerMode = PlayerMode.Moving;
+            }
+        }
+    }
 
-                if ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Ground )
+    private void UpdateMouseCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, 100f, mask))
+        {
+            Texture2D currentCursor = null;
+
+            if (hitInfo.collider.gameObject.layer == (int)Define.Masks.Ground)
+            {
+                if (cursorMode != CursorMode.Basic)
                 {
-
+                    cursorMode = CursorMode.Basic;
+                    currentCursor = CursorTextures[(int)CursorMode.Basic];
+                    Cursor.SetCursor(currentCursor, new Vector2(currentCursor.width / 3, currentCursor.height / 3), UnityEngine.CursorMode.Auto);
                 }
-                else // ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Enemy )
+            }
+            else // ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Enemy )
+            {
+                if (cursorMode != CursorMode.Attack)
                 {
-                    Debug.Log("Enemy hit!");
-
+                    cursorMode = CursorMode.Attack;
+                    currentCursor = CursorTextures[(int)CursorMode.Attack];
+                    Cursor.SetCursor(currentCursor, new Vector2(currentCursor.width / 3, currentCursor.height / 3), UnityEngine.CursorMode.Auto);
                 }
             }
         }
@@ -124,22 +161,22 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
-            transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
+            transform.position += Vector3.forward * stat.MoveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.back), 0.2f);
-            transform.position += Vector3.back * moveSpeed * Time.deltaTime;
+            transform.position += Vector3.back * stat.MoveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
-            transform.position += Vector3.right * moveSpeed * Time.deltaTime;
+            transform.position += Vector3.right * stat.MoveSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.left), 0.2f);
-            transform.position += Vector3.left * moveSpeed * Time.deltaTime;
+            transform.position += Vector3.left * stat.MoveSpeed * Time.deltaTime;
         }
     }
 }
