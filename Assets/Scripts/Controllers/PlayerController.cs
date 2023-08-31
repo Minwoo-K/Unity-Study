@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private enum CursorMode
     {
         None,
+        Basic,
         Attack,
 
     }
@@ -47,6 +48,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        UpdateMouseCursor();
+
         switch (playerMode)
         {
             case PlayerMode.Idle:
@@ -120,17 +123,32 @@ public class PlayerController : MonoBehaviour
             {
                 destination = hitInfo.point; // Set the Destination to the Hit Point
                 playerMode = PlayerMode.Moving;
+            }
+        }
+    }
 
-                Texture2D currentCursor = null;
+    private void UpdateMouseCursor()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, 100f, mask))
+        {
+            Texture2D currentCursor = null;
 
-                if ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Ground )
+            if (hitInfo.collider.gameObject.layer == (int)Define.Masks.Ground)
+            {
+                if (cursorMode != CursorMode.Basic)
                 {
-                    currentCursor = CursorTextures[(int)CursorMode.None];
+                    cursorMode = CursorMode.Basic;
+                    currentCursor = CursorTextures[(int)CursorMode.Basic];
                     Cursor.SetCursor(currentCursor, new Vector2(currentCursor.width / 3, currentCursor.height / 3), UnityEngine.CursorMode.Auto);
                 }
-                else // ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Enemy )
+            }
+            else // ( hitInfo.collider.gameObject.layer == (int)Define.Masks.Enemy )
+            {
+                if (cursorMode != CursorMode.Attack)
                 {
-                    Debug.Log("Enemy hit!");
+                    cursorMode = CursorMode.Attack;
                     currentCursor = CursorTextures[(int)CursorMode.Attack];
                     Cursor.SetCursor(currentCursor, new Vector2(currentCursor.width / 3, currentCursor.height / 3), UnityEngine.CursorMode.Auto);
                 }
